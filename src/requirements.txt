@@ -1,0 +1,10 @@
+boto3
+pydantic
+aws-lambda-powertools
+python-jose[cryptography]
+requests
+email-validator  # Required for Pydantic EmailStr
+python-dotenv
+aws-lambda-powertools
+# For local development, you can also use:
+# pip install "pydantic[email]"

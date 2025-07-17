@@ -1,0 +1,9 @@
+{
+  "resource": "/seed",
+  "path": "/seed",
+  "httpMethod": "POST",
+  "headers": {},
+  "queryStringParameters": null,
+  "body": null,
+  "isBase64Encoded": false
+}

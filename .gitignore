@@ -1,0 +1,56 @@
+.env
+.venv
+NOTES.md
+venv
+.aws-sam
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+.env
+.venv/
+venv/
+ENV/
+env/
+# SAM build artifacts
+.aws-sam/
+# Local DynamoDB data
+dynamodb_data/
+# VSCode and IDE files
+.vscode/
+.idea/
+# If you ever install dependencies to src/
+src/*.dist-info/
+src/__pycache__/
+src/*.egg-info/
+src/bin/
+src/boto3/
+src/botocore/
+src/aws_lambda_powertools/
+src/pydantic*/
+src/pydantic_core*/
+src/email_validator*/
+src/python_jose*/
+src/requests*/
+src/six*/
+src/typing_extensions*/
+src/typing_inspection*/
+src/certifi*/
+src/charset_normalizer*/
+src/cryptography*/
+src/dateutil*/
+src/dns*/
+src/dnspython*/
+src/ecdsa*/
+src/idna*/
+src/jmespath*/
+src/pyasn1*/
+src/pycparser*/
+src/python_dateutil*/
+src/python_dotenv*/
+src/rsa*/
+src/s3transfer*/
+src/urllib3*/

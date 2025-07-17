@@ -1,0 +1,99 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Restaurant Reservation API
+
+Globals:
+  Function:
+    Timeout: 10
+    Runtime: python3.11
+    MemorySize: 256
+
+Resources:
+  GuestsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Guests
+      AttributeDefinitions:
+        - AttributeName: guest_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: guest_id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
+  TablesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Tables
+      AttributeDefinitions:
+        - AttributeName: table_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: table_id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
+  MenuTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Menu
+      AttributeDefinitions:
+        - AttributeName: menu_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: menu_id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
+  ReservationsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Reservations
+      AttributeDefinitions:
+        - AttributeName: reservation_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: reservation_id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
+  # The following Cognito resources and API Auth are not needed for local development
+  # RestaurantUserPool:
+  #   Type: AWS::Cognito::UserPool
+  #   Properties:
+  #     UserPoolName: RestaurantUserPool
+  #
+  # RestaurantUserPoolClient:
+  #   Type: AWS::Cognito::UserPoolClient
+  #   Properties:
+  #     ClientName: RestaurantUserPoolClient
+  #     UserPoolId: !Ref RestaurantUserPool
+  #     GenerateSecret: false
+
+  RestaurantApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      # Auth section removed for local
+
+  RestaurantFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: app.lambda_handler
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            # RestApiId: !Ref RestaurantApi  # Removed for local
+            Path: /{proxy+}
+            Method: ANY
+      Environment:
+        Variables:
+          GUESTS_TABLE: Guests
+          TABLES_TABLE: Tables
+          MENU_TABLE: Menu
+          RESERVATIONS_TABLE: Reservations
+          USE_DYNAMODB_LOCAL: true
+          DYNAMODB_LOCAL_ENDPOINT: http://localhost:8000
+          MOCK_COGNITO_JWT: true
